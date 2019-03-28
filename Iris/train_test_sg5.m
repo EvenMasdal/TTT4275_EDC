@@ -1,6 +1,6 @@
-x1all = load('class_1','-ascii');
-x2all = load('class_2','-ascii');
-x3all = load('class_3','-ascii');
+x1all = load('class_1.txt','-ascii');
+x2all = load('class_2.txt','-ascii');
+x3all = load('class_3.txt','-ascii');
 
 % x1= [x1all(:,4) x1all(:,1) x1all(:,2)];
 % x2= [x2all(:,4) x2all(:,1) x2all(:,2)];
