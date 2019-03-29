@@ -84,48 +84,47 @@ def training_loop(x, t, a, iterations):
 
     return W, mse_vals
 
-def histogram(data, feature=0, _class=0, step=0.3):
-    ''' Wish to make the bins of size 0.1. Max value for our data set
-        (independent of feature) is 5.1 . Thus if we use the bins [1:0.1:max]
-        we are sure that every feature will fall into one of the bins.
-        WE COULD MAYBE USE bins = 'auto'''
-    max_data_val = np.amax(data)
-    slice_val = int(len(data)/3)
-    bins = np.linspace(0.0 ,int(max_data_val+step), num=int((max_data_val/step)+1), endpoint=False)
 
-    if _class == 0:
-        a = data[:slice_val, feature]
-    elif _class == 1:
-        a = data[slice_val:2*slice_val, feature]
-    else:
-        a = data[2*slice_val:, feature]
+def gen_histogram(data, feature, plt_axis, step=0.3):
+    max_val = np.amax(data)         # Finds maxvalue in samples
+    slice_val = int(len(data)/3)    # slice variables used for slicing samples by class
+    # Create bins (sizes of histogram boxes)
+    bins = np.linspace(0.0 ,int(max_val+step), num=int((max_val/step)+1), endpoint=False)
 
-    plt.hist(a, bins, alpha=0.5, label = ['hello', 'hey', 'waddup'])
+    legends = ['Class 1', 'Class 2', 'Class 3']
+    colors = ['Red', 'Blue', 'Yellow']
 
-def gen_histogram(data, feature, num_class=3):
-    for i in range(num_class):
-        histogram(data,feature,i)
+    # Slices samples by class
+    samples = [data[:slice_val, feature], data[slice_val:2*slice_val, feature], data[2*slice_val:, feature]]
+
+    # Creates plot shit, legends and subtitles
+    plt_axis.hist(samples[0], bins, alpha=0.5, stacked=True, label=legends[0], color=colors[0])
+    plt_axis.hist(samples[1], bins, alpha=0.5, stacked=True, label=legends[1], color=colors[1])
+    plt_axis.hist(samples[2], bins, alpha=0.5, stacked=True, label=legends[2], color=colors[2])
+    plt_axis.legend(prop={'size': 7})
+    plt_axis.set_title(f'Feature:{feature+1}')
+
 
 if __name__ == '__main__':
     iterations = 1000
     #x, t = get_data()
-    '''
-    PLOT SHIT MADE BY KRIS
+
     data = np.genfromtxt('iris.data', dtype='U16', delimiter=',')
     x = data[:, :4].astype('float')
     y = data[:, -1]
 
-    num_class = 3
-    num_features= 4
-    gen_histogram(x, feature=0)
-
-    plt.show()
-
-    gen_histogram(x, feature=1)
-    plt.show()
-    gen_histogram(x, feature=2)
-    plt.show()
-    gen_histogram(x, feature=3)
+    # Subplotting of histogram with shared x- and y-axis
+    f, axis = plt.subplots(2,2, sharex='col', sharey='row')
+    features = [0,1,2,3]
+    f.suptitle('Histograms')
+    gen_histogram(x, features[0], axis[0,0])
+    gen_histogram(x, features[1], axis[0,1])
+    gen_histogram(x, features[2], axis[1,0])
+    gen_histogram(x, features[3], axis[1,1])
+    # Adding labels to axis
+    for ax in axis.flat:
+        ax.set(xlabel='Measure [cm]', ylabel='Number of samples')
+        ax.label_outer() # Used to share labels on y-axis and x-axis
     plt.show()
     '''
 
@@ -151,3 +150,4 @@ if __name__ == '__main__':
     plt.plot(steps, mse_vals)
     plt.ylim(0, 0.3)
     plt.show()
+    '''
