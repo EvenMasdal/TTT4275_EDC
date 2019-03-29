@@ -1,5 +1,5 @@
 import numpy as np
-import dataloader
+#import dataloader
 import matplotlib.pyplot as plt
 
 # One hot encode data
@@ -84,10 +84,51 @@ def training_loop(x, t, a, iterations):
 
     return W, mse_vals
 
+def histogram(data, feature=0, _class=0, step=0.3):
+    ''' Wish to make the bins of size 0.1. Max value for our data set
+        (independent of feature) is 5.1 . Thus if we use the bins [1:0.1:max]
+        we are sure that every feature will fall into one of the bins.
+        WE COULD MAYBE USE bins = 'auto'''
+    max_data_val = np.amax(data)
+    slice_val = int(len(data)/3)
+    bins = np.linspace(0.0 ,int(max_data_val+step), num=int((max_data_val/step)+1), endpoint=False)
+
+    if _class == 0:
+        a = data[:slice_val, feature]
+    elif _class == 1:
+        a = data[slice_val:2*slice_val, feature]
+    else:
+        a = data[2*slice_val:, feature]
+
+    plt.hist(a, bins, alpha=0.5, label = ['hello', 'hey', 'waddup'])
+
+def gen_histogram(data, feature, num_class=3):
+    for i in range(num_class):
+        histogram(data,feature,i)
 
 if __name__ == '__main__':
     iterations = 1000
-    x, t = get_data()
+    #x, t = get_data()
+    '''
+    PLOT SHIT MADE BY KRIS
+    data = np.genfromtxt('iris.data', dtype='U16', delimiter=',')
+    x = data[:, :4].astype('float')
+    y = data[:, -1]
+
+    num_class = 3
+    num_features= 4
+    gen_histogram(x, feature=0)
+
+    plt.show()
+
+    gen_histogram(x, feature=1)
+    plt.show()
+    gen_histogram(x, feature=2)
+    plt.show()
+    gen_histogram(x, feature=3)
+    plt.show()
+    '''
+
     W, mse_vals = training_loop(x[:90], t[:90], 0.2, iterations)
     steps = list(range(iterations))
 
