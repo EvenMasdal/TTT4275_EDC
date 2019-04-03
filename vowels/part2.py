@@ -1,13 +1,13 @@
 import numpy as np
 
 
-vowels = ['ae', 'ah', 'aw','eh', 'er', 'ey', 'ih', 'iy', 'oa', 'oo', 'uh', 'uw']
+vowels = ['ae', 'ah', 'aw', 'eh', 'er', 'ei', 'ih', 'iy', 'oa', 'oo', 'uh', 'uw']
 
 
 def get_data():
     data = np.genfromtxt('vowdata_nohead.dat', dtype='U16')
     identifiers = data[:, 0]
-    data = data[:, 1:].astype(np.int)
+    data = data[:, 10:13].astype(np.int)
     return data, identifiers
 
 
@@ -28,13 +28,30 @@ def split_training_test(identifiers, data):
     return data[train_idx], identifiers[train_idx], data[test_idx], identifiers[test_idx]
 
 
+def cov_matrix_temp(x, y):
+    covs = []
+    for i, vowel in enumerate(vowels):
+        idx = find_indeces(vowel, y)
+        class_samples = x[idx]
+        sample_mean = class_samples.mean(axis=0)
+
+        subt = class_samples - sample_mean
+        cov1 = np.dot(subt.T, subt)/70
+        cov2 = np.cov(class_samples.T)
+
+        covs.append(cov1)
+
+    return covs
+
+
 def main():
     data, identifiers = get_data()
 
     x_train, y_train, x_test, y_test = split_training_test(identifiers, data)
 
-    print(x_test)
-
+    a = cov_matrix_temp(x_train, y_train)
+    for i in a:
+        print(i)
 
 if __name__ == '__main__':
     main()

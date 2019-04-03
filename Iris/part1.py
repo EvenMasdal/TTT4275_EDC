@@ -92,7 +92,7 @@ def gen_histogram(data, feature, plt_axis, step=0.3):
     bins = np.linspace(0.0 ,int(max_val+step), num=int((max_val/step)+1), endpoint=False)
 
     legends = ['Class 1', 'Class 2', 'Class 3']
-    colors = ['Red', 'Blue', 'Yellow']
+    colors = ['Red', 'Blue', 'lime']
 
     # Slices samples by class
     samples = [data[:slice_val, feature], data[slice_val:2*slice_val, feature], data[2*slice_val:, feature]]
