@@ -112,34 +112,48 @@ def print_confusion(conf):
     print()
 
 if __name__ == '__main__':
-    iterations = 100
+    iterations = 20
     x, t = get_data()
 
     W, mse_vals1 = training_loop(x[:90], t[:90], 0.2, iterations)
-    steps = list(range(iterations))
 
     preds = predict(W, x)
     true = np.argmax(t, axis=1)
 
-    print_confusion(confusion_matrix(preds[:90], true[:90], 3))
-    print('Correctness:', np.sum(preds[:90]==true[:90])/len(preds[:90]))
-
+#    print_confusion(confusion_matrix(preds[:90], true[:90], 3))
     print_confusion(confusion_matrix(preds[90:], true[90:], 3))
     print('Correctness:', np.sum(preds[90:]==true[90:])/len(preds[90:]))
 
-    W, mse_vals2 = training_loop(x[61:], t[61:], 0.2, iterations)
-    steps = list(range(iterations))
+    # Remove feature 2
+    x = np.delete(x, 1, axis=1)
+    W, mse_vals1 = training_loop(x[:90], t[:90], 0.2, iterations)
 
     preds = predict(W, x)
     true = np.argmax(t, axis=1)
-    print('Inverse order')
-    print_confusion(confusion_matrix(preds[61:], true[61:], 3))
-    print('Correctness:', np.sum(preds[61:]==true[61:])/len(preds[61:]))
 
-    print_confusion(confusion_matrix(preds[:61], true[:61], 3))
-    print('Correctness:', np.sum(preds[:61]==true[:61])/len(preds[:61]))
+#    print_confusion(confusion_matrix(preds[:90], true[:90], 3))
+    print_confusion(confusion_matrix(preds[90:], true[90:], 3))
+    print('Correctness:', np.sum(preds[90:]==true[90:])/len(preds[90:]))
+
+    # Remove feature 1
+    x = np.delete(x, 0, axis=1)
+    W, mse_vals1 = training_loop(x[:90], t[:90], 0.2, iterations)
+
+    preds = predict(W, x)
+    true = np.argmax(t, axis=1)
+
+#    print_confusion(confusion_matrix(preds[:90], true[:90], 3))
+    print_confusion(confusion_matrix(preds[90:], true[90:], 3))
+    print('Correctness:', np.sum(preds[90:]==true[90:])/len(preds[90:]))
+
+    # Remove feature 4
+    x = np.delete(x, 1, axis=1)
+    W, mse_vals1 = training_loop(x[:90], t[:90], 0.2, iterations)
 
 
-    plt.plot(steps, mse_vals1, steps, mse_vals2)
-    plt.ylim(0, 0.3)
-    plt.show()
+    preds = predict(W, x)
+    true = np.argmax(t, axis=1)
+
+#    print_confusion(confusion_matrix(preds[:90], true[:90], 3))
+    print_confusion(confusion_matrix(preds[90:], true[90:], 3))
+    print('Correctness:', np.sum(preds[90:]==true[90:])/len(preds[90:]))
