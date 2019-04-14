@@ -127,17 +127,17 @@ if __name__ == '__main__':
     print_confusion(confusion_matrix(preds[90:], true[90:], 3))
     print('Correctness:', np.sum(preds[90:]==true[90:])/len(preds[90:]))
 
-    W, mse_vals2 = training_loop(x[61:], t[61:], 0.2, iterations)
+    W, mse_vals2 = training_loop(x[60:], t[60:], 0.2, iterations)
     steps = list(range(iterations))
 
     preds = predict(W, x)
     true = np.argmax(t, axis=1)
     print('Inverse order')
-    print_confusion(confusion_matrix(preds[61:], true[61:], 3))
-    print('Correctness:', np.sum(preds[61:]==true[61:])/len(preds[61:]))
+    print_confusion(confusion_matrix(preds[60:], true[60:], 3))
+    print('Correctness:', np.sum(preds[60:]==true[60:])/len(preds[60:]))
 
-    print_confusion(confusion_matrix(preds[:61], true[:61], 3))
-    print('Correctness:', np.sum(preds[:61]==true[:61])/len(preds[:61]))
+    print_confusion(confusion_matrix(preds[:60], true[:60], 3))
+    print('Correctness:', np.sum(preds[:60]==true[:60])/len(preds[:60]))
 
 
     plt.plot(steps, mse_vals1, steps, mse_vals2)
