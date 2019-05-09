@@ -9,4 +9,4 @@ classify the three different petal types using a linear classifier
 
 ## Vowel classification
 
-Make smart robot do smart stuff
+Vowel classification using single Gaussian and Gaussian mixture models.

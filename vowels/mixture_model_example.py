@@ -5,6 +5,11 @@ import math
 
 size = 600
 
+"""
+Code used to generate an example plot for when a GMM can be useful.
+"""
+
+
 def plot_normal(ax, data, color, scaling=1):
     mu = data.mean()
     variance = np.var(data)

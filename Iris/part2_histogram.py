@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 def gen_histogram(data, feature, plt_axis, step=0.3):
     max_val = np.amax(data)         # Finds maxvalue in samples
     slice_val = int(len(data)/3)    # slice variables used for slicing samples by class
+    
     # Create bins (sizes of histogram boxes)
     bins = np.linspace(0.0 ,int(max_val+step), num=int((max_val/step)+1), endpoint=False)
 
@@ -18,7 +19,7 @@ def gen_histogram(data, feature, plt_axis, step=0.3):
     # Slices samples by class
     samples = [data[:slice_val, feature], data[slice_val:2*slice_val, feature], data[2*slice_val:, feature]]
 
-    # Creates plot shit, legends and subtitles
+    # Creates plots, legends and subtitles
     for i in range(3):
         plt_axis.hist(samples[i], bins, alpha=0.5, stacked=True, label=legends[i], color=colors[i])
     plt_axis.legend(prop={'size': 7})
@@ -38,6 +39,7 @@ if __name__ == '__main__':
     gen_histogram(x, features[1], axis[0,1])
     gen_histogram(x, features[2], axis[1,0])
     gen_histogram(x, features[3], axis[1,1])
+
     # Adding labels to axis
     for ax in axis.flat:
         ax.set(xlabel='Measure [cm]', ylabel='Number of samples')
