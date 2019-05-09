@@ -12,6 +12,10 @@ classify the three different petal types using a linear classifier
 Vowel classification using single Gaussian and Gaussian mixture models.
 
 
-You will need to obtain the data yourself.
+## Obtaining datsets
+
+You will have to download the data sets yourself.
+
 The iris data can be found on kaggle: https://www.kaggle.com/uciml/iris
+
 The data used for the vowels can be found here: http://homepages.wmich.edu/~hillenbr/voweldata.html
